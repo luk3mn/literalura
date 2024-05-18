@@ -118,7 +118,13 @@ _Before starting this application in your local environment, it'll be necessary 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ]
+- [x] Http Request and Http Response to extract API data
+- [x] Convert data JSON in java class
+- [ ] Storing data from API response
+- [x] find all books
+- [x] find all authors
+- [x] Query JPQL to get authors alive in a specific year
+- [x] Query JPQL all book by language
 
 
 <p align="right">(<a href="#literalura">back to top</a>)</p>

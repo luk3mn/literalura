@@ -2,6 +2,9 @@ package com.alura.literalura.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Entity
 @Table(name = "books")
 public class Book {
@@ -15,17 +18,20 @@ public class Book {
     @ManyToOne
     private Author author;
 
-    private String language;
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Language> language;
+
     private Integer download;
 
     public Book() {
     }
 
-    public Book(String title, Author author, String language, Integer download) {
-        this.title = title;
-        this.author = author;
+    public List<Language> getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(List<Language> language) {
         this.language = language;
-        this.download = download;
     }
 
     public Book(BookData data) {
@@ -37,14 +43,6 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
     }
 
     public Integer getDownload() {
@@ -76,7 +74,7 @@ public class Book {
         return  "-------- LIVRO -----------\n" +
                 "Titulo: " + title + "\n" +
                 "Autor: " + author.getName() + "\n" +
-                "Idioma: " + language + "\n" +
+                "Idioma: " + language.stream().map(Language::getLanguage).toList() + "\n" +
                 "Numero de Downloads: " + download +
                 "\n--------------------------\n";
     }

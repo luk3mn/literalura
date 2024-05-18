@@ -97,14 +97,31 @@ public class Main {
             System.out.println("--------------------------------------");
             System.out.println("Titulo: " + data.title());
             data.author().forEach(a -> System.out.println("Autor: " + a.name()));
-            System.out.println("Idioma: " + data.language().get(0));
+            System.out.println("Idioma: " + data.language());
             System.out.println("Numero de Downloads: " + data.download());
             System.out.println("--------------------------------------");
 
             //TODO: Store data on database
+            // * One book to Many Authors: "Argentina, Legend and History"
+
+//            Language language = Language.fromInput("en");
+
+            for (String s : data.language()) {
+                System.out.println(s);
+//                LanguageType languageType = LanguageType.fromInput(s);
+//                System.out.println(languageType);
+            }
+
+//            System.out.println(language);
+
+
 //            Book newBook = new Book(book.title(), book.author().get(), book.language(), book.download());
 
-//            Book book = new Book(data);
+            Book book = new Book();
+            book.setTitle(data.title());
+//            book.setLanguage(data.language());
+
+            bookRepository.save(book);
 
 //            book.setTitle(data.title());
 //            book.setLanguage(data.language());
@@ -166,17 +183,17 @@ public class Main {
         """);
         var language = scanner.nextLine().toLowerCase();
 
-        List<Author> authors = authorRepository.findByLanguage(language);
+        List<Book> books = bookRepository.findByLanguage(language);
         System.out.println(
                 """
                 -----------------------
                 """ +
-                        "---- Autores em " + language.toUpperCase() + " ----\n" +
+                        "---- Livros em " + language.toUpperCase() + " ----\n" +
                         """
                         -----------------------
                         """
         );
-        authors.forEach(System.out::println);
+        books.forEach(System.out::println);
     }
 
 }
