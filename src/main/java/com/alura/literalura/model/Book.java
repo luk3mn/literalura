@@ -3,7 +3,6 @@ package com.alura.literalura.model;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "books")
@@ -15,26 +14,30 @@ public class Book {
     @Column(nullable = false)
     private String title;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Author author;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Language> language;
+//    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private String language;
 
     private Integer download;
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 
     public Book() {
     }
 
-    public List<Language> getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(List<Language> language) {
+    public Book(String title, Author author, String language, Integer download) {
+        this.title = title;
+        this.author = author;
         this.language = language;
-    }
-
-    public Book(BookData data) {
+        this.download = download;
     }
 
     public String getTitle() {
@@ -74,7 +77,8 @@ public class Book {
         return  "-------- LIVRO -----------\n" +
                 "Titulo: " + title + "\n" +
                 "Autor: " + author.getName() + "\n" +
-                "Idioma: " + language.stream().map(Language::getLanguage).toList() + "\n" +
+//                "Idioma: " + language.stream().map(String::getLanguage).toList() + "\n" +
+                "Idioma: " + language + "\n" +
                 "Numero de Downloads: " + download +
                 "\n--------------------------\n";
     }

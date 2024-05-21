@@ -11,7 +11,7 @@ public class ExtractData {
 
     public String getPageFrom(String title) {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(endpoint+title))
+                .uri(URI.create(endpoint+title.replace(" ", "%20").toLowerCase()))
                 .build();
 
         try {

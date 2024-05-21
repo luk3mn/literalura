@@ -1,14 +1,13 @@
 package com.alura.literalura.main;
 
-import com.alura.literalura.model.Author;
-import com.alura.literalura.model.Book;
-import com.alura.literalura.model.BookData;
+import com.alura.literalura.model.*;
 import com.alura.literalura.repository.AuthorRepository;
 import com.alura.literalura.repository.BookRepository;
 import com.alura.literalura.service.ConvertData;
 import com.alura.literalura.service.ExtractData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -46,10 +45,10 @@ public class Main {
             if (option.equalsIgnoreCase("0")) {
                 System.out.println("""
 
-                        ***************************
-                        *** APLICAÇÃO ENCERRADA ***
-                        ***************************
-                        """);
+                ***************************
+                *** APLICAÇÃO ENCERRADA ***
+                ***************************
+                """);
                 break;
             }
 
@@ -71,10 +70,10 @@ public class Main {
                     break;
                 default:
                     System.out.println("""
-                            **********************
-                            *** OPÇÃO INVÁLIDA ***
-                            **********************
-                            """);
+                    **********************
+                    *** OPÇÃO INVÁLIDA ***
+                    **********************
+                    """);
 
             }
         }
@@ -84,9 +83,8 @@ public class Main {
         System.out.println("Informe o título do livro: ");
         var title = scanner.nextLine();
 
-        var newTitle = title.replace(" ", "%20").toLowerCase();
-        var jsonResponse = extractData.getPageFrom(newTitle);
-
+        var jsonResponse = extractData.getPageFrom(title);
+//        var jsonResponse = extractData.getPageFrom("Argentina, Legend and History");
         try {
             var json = convert.toObject(jsonResponse);
 //            System.out.println(json.get("results").get(0));
@@ -106,33 +104,59 @@ public class Main {
 
 //            Language language = Language.fromInput("en");
 
-            for (String s : data.language()) {
-                System.out.println(s);
-//                LanguageType languageType = LanguageType.fromInput(s);
-//                System.out.println(languageType);
-            }
+//            for (AuthorData d : data.author()) {
+//                System.out.println(d);
+//            }
 
 //            System.out.println(language);
 
 
 //            Book newBook = new Book(book.title(), book.author().get(), book.language(), book.download());
 
-            Book book = new Book();
-            book.setTitle(data.title());
-//            book.setLanguage(data.language());
 
+
+            Author author = new Author();
+            for (AuthorData dAuthor : data.author()) {
+                author.setName(dAuthor.name());
+                author.setBirthYear(dAuthor.birthYear());
+                author.setDeathYear(dAuthor.deathYear());
+            }
+
+
+
+//            authorRepository.save(author);
+
+//            author.setName(String.valueOf(data.author().get(0)));
+//            author.setBirthYear(data.author());
+//            Language language = new Language();
+//            toLanguage(data);
+//            for (String dLanguage : data.language()) {
+//                language.setLanguage(dLanguage);
+//                System.out.println(dLanguage);
+//            }
+//            language.setLanguage(data.language());
+
+            Book book = new Book(data.title(), author, data.language().get(0), data.download());
+//            book.setTitle(data.title());
+//            book.setAuthor(author);
+//            book.setLanguage();
             bookRepository.save(book);
 
-//            book.setTitle(data.title());
-//            book.setLanguage(data.language());
-//            Author newBook = new Author();
-//            newBook
-//            System.out.println(data);
+            System.out.println(book);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
 
     }
+
+//    private List<Language> toLanguage(BookData data) {
+//        List<Language> languages = new ArrayList<>();
+//        for (String l : data.language()) {
+//            System.out.println(l);
+//        }
+//
+//        return languages;
+//    }
 
     private void getBooks() {
         List<Book> books = bookRepository.findAll();

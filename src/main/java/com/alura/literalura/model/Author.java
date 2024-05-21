@@ -21,7 +21,7 @@ public class Author {
     @Column(name = "death_year")
     private String deathYear;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "author")
     private List<Book> book;
 
     public Author() {
