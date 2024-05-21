@@ -1,13 +1,15 @@
 package com.alura.literalura.main;
 
-import com.alura.literalura.model.*;
+import com.alura.literalura.model.Author;
+import com.alura.literalura.model.AuthorData;
+import com.alura.literalura.model.Book;
+import com.alura.literalura.model.BookData;
 import com.alura.literalura.repository.AuthorRepository;
 import com.alura.literalura.repository.BookRepository;
 import com.alura.literalura.service.ConvertData;
 import com.alura.literalura.service.ExtractData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -84,36 +86,22 @@ public class Main {
         var title = scanner.nextLine();
 
         var jsonResponse = extractData.getPageFrom(title);
-//        var jsonResponse = extractData.getPageFrom("Argentina, Legend and History");
         try {
             var json = convert.toObject(jsonResponse);
-//            System.out.println(json.get("results").get(0));
 
+            // TODO: avoid exception if anyone book had been found (show a friendly message)
             BookData data = convert.getData(String.valueOf(json.get("results").get(0)), BookData.class);
             System.out.println("--------------------------------------");
             System.out.println("--------  RESULTADO DA BUSCA  --------");
             System.out.println("--------------------------------------");
             System.out.println("Titulo: " + data.title());
             data.author().forEach(a -> System.out.println("Autor: " + a.name()));
-            System.out.println("Idioma: " + data.language());
+            System.out.println("Idioma: " + data.language().get(0));
             System.out.println("Numero de Downloads: " + data.download());
             System.out.println("--------------------------------------");
 
-            //TODO: Store data on database
-            // * One book to Many Authors: "Argentina, Legend and History"
-
-//            Language language = Language.fromInput("en");
-
-//            for (AuthorData d : data.author()) {
-//                System.out.println(d);
-//            }
-
-//            System.out.println(language);
-
-
-//            Book newBook = new Book(book.title(), book.author().get(), book.language(), book.download());
-
-
+            // TODO: allow insert more than one book per author
+            // - findByName (Author) if exists -> insert just book and associate with author
 
             Author author = new Author();
             for (AuthorData dAuthor : data.author()) {
@@ -122,46 +110,18 @@ public class Main {
                 author.setDeathYear(dAuthor.deathYear());
             }
 
-
-
-//            authorRepository.save(author);
-
-//            author.setName(String.valueOf(data.author().get(0)));
-//            author.setBirthYear(data.author());
-//            Language language = new Language();
-//            toLanguage(data);
-//            for (String dLanguage : data.language()) {
-//                language.setLanguage(dLanguage);
-//                System.out.println(dLanguage);
-//            }
-//            language.setLanguage(data.language());
-
             Book book = new Book(data.title(), author, data.language().get(0), data.download());
-//            book.setTitle(data.title());
-//            book.setAuthor(author);
-//            book.setLanguage();
-            bookRepository.save(book);
 
-            System.out.println(book);
+            bookRepository.save(book);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-//    private List<Language> toLanguage(BookData data) {
-//        List<Language> languages = new ArrayList<>();
-//        for (String l : data.language()) {
-//            System.out.println(l);
-//        }
-//
-//        return languages;
-//    }
-
     private void getBooks() {
         List<Book> books = bookRepository.findAll();
         books.forEach(System.out::println);
-//        System.out.println();
     }
 
     private void getAuthors() {

@@ -3,7 +3,6 @@ package com.alura.literalura.model;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "authors")
@@ -21,7 +20,7 @@ public class Author {
     @Column(name = "death_year")
     private String deathYear;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     private List<Book> book;
 
     public Author() {

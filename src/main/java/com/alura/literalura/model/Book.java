@@ -17,9 +17,7 @@ public class Book {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Author author;
 
-//    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private String language;
-
     private Integer download;
 
     public String getLanguage() {
@@ -77,7 +75,6 @@ public class Book {
         return  "-------- LIVRO -----------\n" +
                 "Titulo: " + title + "\n" +
                 "Autor: " + author.getName() + "\n" +
-//                "Idioma: " + language.stream().map(String::getLanguage).toList() + "\n" +
                 "Idioma: " + language + "\n" +
                 "Numero de Downloads: " + download +
                 "\n--------------------------\n";
