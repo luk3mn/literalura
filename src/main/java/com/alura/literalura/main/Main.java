@@ -11,6 +11,7 @@ import com.alura.literalura.service.ExtractData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
@@ -38,6 +39,7 @@ public class Main {
             [3] Listar autores registrados
             [4] Listar autores vivos em um determinado ano
             [5] Listar livros em um determinado idioma
+            [6] Listar os 10 livros mais baixados
             [0] Sair
 
             Escolha um opção:
@@ -70,6 +72,9 @@ public class Main {
                 case "5":
                     getAuthorByLanguage();
                     break;
+                case "6":
+                    getTopDownloaded();
+                    break;
                 default:
                     System.out.println("""
                     **********************
@@ -100,9 +105,22 @@ public class Main {
             System.out.println("Numero de Downloads: " + data.download());
             System.out.println("--------------------------------------");
 
-            // TODO: allow insert more than one book per author
-            // - findByName (Author) if exists -> insert just book and associate with author
+            saveData(data);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
+    }
+
+    private void saveData(BookData data) {
+        // TODO: adjust to allow persist more than one book per author
+        // * PROBLEM: CASCADE TYPE.ALL => I can't use both to store and query.
+        Optional<Author> storedAuthor = authorRepository.findByName(data.author().get(0).name());
+
+        if (storedAuthor.isPresent()) {
+            Book book = new Book(data.title(), storedAuthor.get(), data.language().get(0), data.download());
+            bookRepository.save(book);
+        } else {
             Author author = new Author();
             for (AuthorData dAuthor : data.author()) {
                 author.setName(dAuthor.name());
@@ -111,12 +129,8 @@ public class Main {
             }
 
             Book book = new Book(data.title(), author, data.language().get(0), data.download());
-
             bookRepository.save(book);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
         }
-
     }
 
     private void getBooks() {
@@ -167,7 +181,7 @@ public class Main {
         """);
         var language = scanner.nextLine().toLowerCase();
 
-        List<Book> books = bookRepository.findByLanguage(language);
+        List<Book> books = bookRepository.findByLanguageContainingIgnoreCase(language);
         System.out.println(
                 """
                 -----------------------
@@ -176,6 +190,18 @@ public class Main {
                         """
                         -----------------------
                         """
+        );
+        books.forEach(System.out::println);
+    }
+
+    private void getTopDownloaded() {
+        List<Book> books = bookRepository.getTopDownloaded();
+        System.out.println(
+        """
+        -----------------------------
+        -- TOP 10 DOWNLOADED BOOKS --
+        -----------------------------
+        """
         );
         books.forEach(System.out::println);
     }

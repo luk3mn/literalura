@@ -11,4 +11,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findByLanguage(String language);
 
     List<Book> findByLanguageContainingIgnoreCase(String language);
+
+    @Query("SELECT b FROM Book b ORDER BY b.download DESC LIMIT 10")
+    List<Book> getTopDownloaded();
 }

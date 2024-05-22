@@ -125,7 +125,7 @@ _Before starting this application in your local environment, it'll be necessary 
 - [x] find all authors
 - [x] Query JPQL to get authors alive in a specific year
 - [x] Query JPQL all book by language
-- [ ] List top 10 downloaded books
+- [x] List top 10 downloaded books
 
 
 <p align="right">(<a href="#literalura">back to top</a>)</p>
