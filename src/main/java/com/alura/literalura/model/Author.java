@@ -20,7 +20,7 @@ public class Author {
     @Column(name = "death_year")
     private String deathYear;
 
-    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Book> book;
 
     public Author() {
@@ -31,6 +31,8 @@ public class Author {
     }
 
     public void setBook(List<Book> book) {
+        // indicate that "Author" is owner of "Book"
+        book.forEach(b -> b.setAuthor(this)); // to manage to save a new book and associate author_id to it. without it, it will save a new book without an author_id
         this.book = book;
     }
 

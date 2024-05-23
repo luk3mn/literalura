@@ -10,6 +10,7 @@ import com.alura.literalura.service.ConvertData;
 import com.alura.literalura.service.ExtractData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -113,14 +114,26 @@ public class Main {
     }
 
     private void saveData(BookData data) {
-        // TODO: adjust to allow persist more than one book per author
-        // * PROBLEM: CASCADE TYPE.ALL => I can't use both to store and query.
         Optional<Author> storedAuthor = authorRepository.findByName(data.author().get(0).name());
 
+
+        List<Book> bookCollection = new ArrayList<>();
+
         if (storedAuthor.isPresent()) {
-            Book book = new Book(data.title(), storedAuthor.get(), data.language().get(0), data.download());
-            bookRepository.save(book);
+            Book book = new Book();
+            var author = storedAuthor.get();
+
+            book.setTitle(data.title());
+            book.setLanguage(data.language().get(0));
+            book.setDownload(data.download());
+
+            // create a book collection to set on author
+            bookCollection.add(book);
+            author.setBook(bookCollection);
+
+            authorRepository.save(author);
         } else {
+
             Author author = new Author();
             for (AuthorData dAuthor : data.author()) {
                 author.setName(dAuthor.name());
