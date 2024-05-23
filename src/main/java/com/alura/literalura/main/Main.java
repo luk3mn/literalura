@@ -9,6 +9,7 @@ import com.alura.literalura.repository.BookRepository;
 import com.alura.literalura.service.ConvertData;
 import com.alura.literalura.service.ExtractData;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +110,12 @@ public class Main {
             saveData(data);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("""
+            ************************************************
+            *** O livro ja foi cadastrado anteriormente! ***
+            ************************************************
+            """);
         }
 
     }

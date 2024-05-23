@@ -21,7 +21,7 @@
   <h3 align="center">Challenge ONE: Literalura</h3>
 
   <p align="center">
-    Backend application built in Java and Spring boot as part of challenge implementation to practice the study content.
+    Backend application developed in Java and Spring Boot as part of a challenge to practice and solidify my study content.
     <br />
     <a href="https://github.com/luk3mn/literalura/README.md"><strong>Explore the docs »</strong></a>
     <br />
@@ -65,8 +65,11 @@
 <!-- IMAGE (OPCIONAL) -->
 
 <p align="justify">
-
+   In this challenge, I created a comprehensive book repository by integrating data from the <a href="https://gutendex.com/">Gutendex</a> API. The process involved fetching book data in JSON format and converting this data into Java objects to ensure seamless manipulation and storage within a PostgreSQL database
 </p> 
+<p align="justify">
+   To achieve this, I utilized Spring Boot to handle with data and streamlined backend operations. The JSON data was mapped to Java class objects using tools like Jackson, allowing for effective data manipulation and persistence. The Spring Data JPA was employed to manage database interactions, providing a clean and efficient way to handle CRUD operations.
+</p>
 
 <p align="right">(<a href="#literalura">back to top</a>)</p>
 
@@ -156,7 +159,7 @@ If you have any feedback, please reach out to us at lucasnunes2030@gmail.com
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
-
+* [Gutendex](https://gutendex.com/)
 * [How to parse JSON string with Jackson](https://mkyong.com/java/jackson-how-to-parse-json/)
 
 

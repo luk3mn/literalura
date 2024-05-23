@@ -2,8 +2,6 @@ package com.alura.literalura.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "books")
 public class Book {
@@ -11,7 +9,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String title;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -72,7 +70,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return  "-------- LIVRO -----------\n" +
+        return "-------- LIVRO -----------\n" +
                 "Titulo: " + title + "\n" +
                 "Autor: " + author.getName() + "\n" +
                 "Idioma: " + language + "\n" +
