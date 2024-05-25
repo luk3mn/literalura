@@ -7,10 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
-    @Query("SELECT b FROM Book b WHERE b.language ILIKE %:language")
+//    @Query("SELECT b FROM Book b WHERE b.language ILIKE %:language")
+    @Query("SELECT b FROM Book b JOIN b.language l WHERE l.abbreviation ILIKE %:language")
     List<Book> findByLanguage(String language);
 
-    List<Book> findByLanguageContainingIgnoreCase(String language);
+//    List<Book> findByLanguageContainingIgnoreCase(String language);
 
     @Query("SELECT b FROM Book b ORDER BY b.download DESC LIMIT 10")
     List<Book> getTopDownloaded();

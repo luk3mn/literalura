@@ -5,10 +5,10 @@
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
-[![personal][personal-shield]][personal-url]
+![personal][personal-shield]
 [![Issues][issues-shield]][issues-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-![Badge em Desenvolvimento](https://img.shields.io/static/v1?label=STATUS&message=Development&color=GREEN&style=for-the-badge)
+![Badge em Desenvolvimento](https://img.shields.io/static/v1?label=STATUS&message=Finished&color=GREEN&style=for-the-badge)
 
 <!-- ![image](soft%20(1).png) -->
 
@@ -62,7 +62,12 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-<!-- IMAGE (OPCIONAL) -->
+
+<div align="center">
+    <img width=1000 src="diagram.png" alt="diagram"/>
+</div>
+
+
 
 <p align="justify">
    In this challenge, I created a comprehensive book repository by integrating data from the <a href="https://gutendex.com/">Gutendex</a> API. The process involved fetching book data in JSON format and converting this data into Java objects to ensure seamless manipulation and storage within a PostgreSQL database
@@ -70,6 +75,14 @@
 <p align="justify">
    To achieve this, I utilized Spring Boot to handle with data and streamlined backend operations. The JSON data was mapped to Java class objects using tools like Jackson, allowing for effective data manipulation and persistence. The Spring Data JPA was employed to manage database interactions, providing a clean and efficient way to handle CRUD operations.
 </p>
+
+<div align="center">
+    <img width=645 src="literalura.png" alt="UML Diagram"/>
+</div>
+
+<p align="justify">
+   To utilize the extracted data from <a href="https://gutendex.com/">Gutendex</a>, I employed the <a href="https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind">Jackson</a> library to convert the JSON response into manageable Java class objects. These objects were then structured within the Spring Boot context to build the database using ORM, ensuring seamless data handling and persistence. 
+</p> 
 
 <p align="right">(<a href="#literalura">back to top</a>)</p>
 
@@ -101,9 +114,9 @@ _Before starting this application in your local environment, it'll be necessary 
    ```shell
    git clone https://github.com/luk3mn/literalura.git
    ```
-2. PostgreSQL setting up
+2. PostgreSQL database set up
    ```shell
-   sudo docker-compose u -d
+   sudo docker-compose up -d
    ```
 
 
@@ -181,8 +194,7 @@ If you have any feedback, please reach out to us at lucasnunes2030@gmail.com
 [license-url]: https://github.com/luk3mn/literalura/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/lucasmaues/
-[personal-shield]: https://img.shields.io/static/v1?label=Luke&message=🎸&color=2e3643&style=for-the-badge&colorB=555
-[personal-url]: https://www.rocketseat.com.br/
+[personal-shield]: https://img.shields.io/static/v1?label=ORACLE_ONE&message=ALURA&color=2e3643&style=for-the-badge&colorB=555
 
 <!-- Stack Shields -->
 [Java]: https://img.shields.io/badge/Java-E02027?style=for-the-badge&logo=java&logoColor=ffffff

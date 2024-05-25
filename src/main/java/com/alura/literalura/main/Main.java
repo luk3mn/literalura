@@ -1,9 +1,6 @@
 package com.alura.literalura.main;
 
-import com.alura.literalura.model.Author;
-import com.alura.literalura.model.AuthorData;
-import com.alura.literalura.model.Book;
-import com.alura.literalura.model.BookData;
+import com.alura.literalura.model.*;
 import com.alura.literalura.repository.AuthorRepository;
 import com.alura.literalura.repository.BookRepository;
 import com.alura.literalura.service.ConvertData;
@@ -15,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -120,6 +118,39 @@ public class Main {
 
     }
 
+//    private void saveData(BookData data) {
+//        Optional<Author> storedAuthor = authorRepository.findByName(data.author().get(0).name());
+//
+//
+//        List<Book> bookCollection = new ArrayList<>();
+//
+//        if (storedAuthor.isPresent()) {
+//            Book book = new Book();
+//            var author = storedAuthor.get();
+//
+//            book.setTitle(data.title());
+//            book.setLanguage(data.language().get(0));
+//            book.setDownload(data.download());
+//
+//            // create a book collection to set on author
+//            bookCollection.add(book);
+//            author.setBook(bookCollection);
+//
+//            authorRepository.save(author);
+//        } else {
+//
+//            Author author = new Author();
+//            for (AuthorData dAuthor : data.author()) {
+//                author.setName(dAuthor.name());
+//                author.setBirthYear(dAuthor.birthYear());
+//                author.setDeathYear(dAuthor.deathYear());
+//            }
+//
+//            Book book = new Book(data.title(), author, data.language().get(0), data.download());
+//            bookRepository.save(book);
+//        }
+//    }
+
     private void saveData(BookData data) {
         Optional<Author> storedAuthor = authorRepository.findByName(data.author().get(0).name());
 
@@ -131,7 +162,7 @@ public class Main {
             var author = storedAuthor.get();
 
             book.setTitle(data.title());
-            book.setLanguage(data.language().get(0));
+            book.setLanguage(data.language().stream().map(Language::new).collect(Collectors.toList()));
             book.setDownload(data.download());
 
             // create a book collection to set on author
@@ -148,7 +179,7 @@ public class Main {
                 author.setDeathYear(dAuthor.deathYear());
             }
 
-            Book book = new Book(data.title(), author, data.language().get(0), data.download());
+            Book book = new Book(data.title(), author, data.language().stream().map(Language::new).collect(Collectors.toList()), data.download());
             bookRepository.save(book);
         }
     }
@@ -199,9 +230,10 @@ public class Main {
         
         Insira o idioma para realizar a busca:
         """);
-        var language = scanner.nextLine().toLowerCase();
+        String language = scanner.nextLine().toLowerCase();
 
-        List<Book> books = bookRepository.findByLanguageContainingIgnoreCase(language);
+//        List<Book> books = bookRepository.findByLanguageContainingIgnoreCase(language);
+        List<Book> books = bookRepository.findByLanguage(language);
         System.out.println(
                 """
                 -----------------------
