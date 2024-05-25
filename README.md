@@ -15,10 +15,9 @@
 
 
 <!-- PROJECT LOGO -->
-<br />
 <div align="center">
-
-  <h3 align="center">Challenge ONE: Literalura</h3>
+   <img width="300" src="badge.png" alt="badge"/>
+   <h3 align="center">Challenge ONE: Literalura</h3>
 
   <p align="center">
     Backend application developed in Java and Spring Boot as part of a challenge to practice and solidify my study content.
