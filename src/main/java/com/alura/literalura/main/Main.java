@@ -118,39 +118,6 @@ public class Main {
 
     }
 
-//    private void saveData(BookData data) {
-//        Optional<Author> storedAuthor = authorRepository.findByName(data.author().get(0).name());
-//
-//
-//        List<Book> bookCollection = new ArrayList<>();
-//
-//        if (storedAuthor.isPresent()) {
-//            Book book = new Book();
-//            var author = storedAuthor.get();
-//
-//            book.setTitle(data.title());
-//            book.setLanguage(data.language().get(0));
-//            book.setDownload(data.download());
-//
-//            // create a book collection to set on author
-//            bookCollection.add(book);
-//            author.setBook(bookCollection);
-//
-//            authorRepository.save(author);
-//        } else {
-//
-//            Author author = new Author();
-//            for (AuthorData dAuthor : data.author()) {
-//                author.setName(dAuthor.name());
-//                author.setBirthYear(dAuthor.birthYear());
-//                author.setDeathYear(dAuthor.deathYear());
-//            }
-//
-//            Book book = new Book(data.title(), author, data.language().get(0), data.download());
-//            bookRepository.save(book);
-//        }
-//    }
-
     private void saveData(BookData data) {
         Optional<Author> storedAuthor = authorRepository.findByName(data.author().get(0).name());
 
